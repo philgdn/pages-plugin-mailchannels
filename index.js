@@ -17,6 +17,7 @@ var onRequestGet = async ({
 
 // api/index.ts
 var sendEmail = async (payload) => {
+  console.log("Sending mail...")
   const response = await fetch("https://api.mailchannels.net/tx/v1/send", {
     method: "POST",
     headers: {
@@ -24,6 +25,7 @@ var sendEmail = async (payload) => {
     },
     body: JSON.stringify(payload)
   });
+  console.log("Response status: " + response.status)
   if (response.status === 202)
     return {
       success: true
@@ -32,6 +34,7 @@ var sendEmail = async (payload) => {
     const {
       errors
     } = await response.clone().json();
+    console.log(errors)
     return {
       success: false,
       errors

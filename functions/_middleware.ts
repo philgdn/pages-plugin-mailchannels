@@ -5,36 +5,43 @@
 // Replace this with your own email, otherwise the Mailchannel API will reject it:
 const myEmail = "example@example.com"
 
-import mailChannelsPlugin from "@cardiff.marketing/pages-plugin-mailchannels";
+import mailChannelsPlugin from "@sgp203.be/pages-plugin-mailchannels";
 
 // Required properties: "personalizations", "from", "respondWith".
 // Optional Properties: "subject", "content". 
-export const onRequest: PagesFunction = mailChannelsPlugin({turnstile: false, personalizations: emailPersonalizations, from: emailFrom, subject: emailSubject,  respondWith: formResponse});
+export const onRequest: PagesFunction = mailChannelsPlugin(
+    {
+        turnstile: false,
+        personalizations: emailPersonalizations,
+        from: emailFrom,
+        subject: emailSubject,
+        respondWith: formResponse
+    });
 
 // Required. Must have "name" and "email" as below. The Mailchannel API will reject 'unsafe' email addresses. See their docs for more info.
 function emailPersonalizations() {
-  return [{to: [{ name: "Me", email: myEmail }],},]
+    return [{to: [{name: "Me", email: myEmail}],},]
 }
 
 // Required. Must contain name and email. The Mailchannel API will reject 'unsafe' email addresses. See their docs for more info.
 function emailFrom(data) {
-  return {name: `${ data.name } form`, email: myEmail}
+    return {name: `${data.name} form`, email: myEmail}
 }
 
 // Required. Must be a Response object. This example is a redirect but any Response is valid.
 // https://developer.mozilla.org/en-US/docs/Web/API/Response
 function formResponse() {
-  return Response.redirect('https://cardiff.marketing/about/', 302)
+    return Response.redirect('https://sgp203.be/', 302)
 }
 
 // "subject" is Optional. This is the default template in the package but I've copied it here to make it easier to edit.
 function emailSubject(data) {
-  return `${ data.name } form submission from: ` + data.formData.get("email")
+    return `${data.name} form submission from: ` + data.formData.get("email")
 }
 
 // "content" is Optional. This is the default template in the package but I've copied it here to make it easier to edit.
 function emailContent(data) {
-  return `<!DOCTYPE html>
+    return `<!DOCTYPE html>
   <html>
     <body>
       <h1>New contact form submission</h1>
