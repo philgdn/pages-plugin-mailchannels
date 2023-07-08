@@ -18,6 +18,8 @@ var onRequestGet = async ({
 // api/index.ts
 var sendEmail = async (payload) => {
   console.log("Sending mail...")
+  console.log(JSON.stringify(payload));
+
   const response = await fetch("https://api.mailchannels.net/tx/v1/send", {
     method: "POST",
     headers: {
@@ -141,6 +143,9 @@ var onFormSubmit = async ({
         value: textHTMLContent(submission)
       }
     ];
+
+    console.log("Pesonalizations: " + personalizations)
+
     let {
       success
     } = await sendEmail({
