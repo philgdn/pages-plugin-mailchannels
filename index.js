@@ -96,6 +96,8 @@ var onFormSubmit = async ({
     let token, secret;
     token = formData.get('cf-turnstile-response') ? formData.get('cf-turnstile-response').toString() : false;
     secret = env.TURNSTILE_KEY ? env.TURNSTILE_KEY.toString() : false;
+    console.log("Turnstile token: " + token)
+    console.log("Turnstile secret: " + secret)
     if (!token) {
       return new Response(`Turnstile = true - but no token found. Check the widget is rendering inside the <form> of your page: https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/.`, {
         status: 512
@@ -122,6 +124,7 @@ var onFormSubmit = async ({
       return next();
     }
     formData.delete("cf-turnstile-response");
+    console.log("FormData: " + JSON.stringify(formData))
   }
 
   if (name) {
