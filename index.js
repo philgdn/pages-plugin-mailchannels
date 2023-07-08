@@ -17,8 +17,6 @@ var onRequestGet = async ({
 
 // api/index.ts
 var sendEmail = async (payload) => {
-  console.log("Sending mail...")
-  console.log(JSON.stringify(payload));
 
   const response = await fetch("https://api.mailchannels.net/tx/v1/send", {
     method: "POST",
@@ -27,7 +25,7 @@ var sendEmail = async (payload) => {
     },
     body: JSON.stringify(payload)
   });
-  console.log("Response status: " + response.status)
+
   if (response.status === 202)
     return {
       success: true
@@ -94,15 +92,16 @@ var onFormSubmit = async ({
 
   if (pluginArgs.turnstile) {
     let token, secret;
+
     token = formData.get('cf-turnstile-response') ? formData.get('cf-turnstile-response').toString() : false;
     secret = env.TURNSTILE_KEY ? env.TURNSTILE_KEY.toString() : false;
-    console.log("Turnstile token: " + token)
-    console.log("Turnstile secret: " + secret)
+
     if (!token) {
       return new Response(`Turnstile = true - but no token found. Check the widget is rendering inside the <form> of your page: https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/.`, {
         status: 512
       })
     };
+
     if (!secret) {
       return new Response(`Turnstile token found - but no secrey key set. Set an Environment variable with your Turnstile secret called "TURNSTILE_KEY" under Pages > Settings > Environment variables.`, {
         status: 512
@@ -124,7 +123,6 @@ var onFormSubmit = async ({
       return next();
     }
     formData.delete("cf-turnstile-response");
-    console.log("FormData: " + JSON.stringify(formData))
   }
 
   if (name) {
@@ -146,8 +144,6 @@ var onFormSubmit = async ({
         value: textHTMLContent(submission)
       }
     ];
-
-    console.log("Pesonalizations: " + personalizations)
 
     let {
       success
