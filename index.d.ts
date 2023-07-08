@@ -7,6 +7,7 @@ interface Submission {
 }
 
 export type PluginArgs = {
+  turnstile?: boolean;
   personalizations:
     | MailSendBody["personalizations"]
     | ((submission: Submission) => MailSendBody["personalizations"]);
